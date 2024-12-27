@@ -36,11 +36,11 @@ class _HomepageState extends State<HomePage> {
   int bestScore = 0;
   int currentLevel = 0;
 
-  List<Color> backgroundColors = [
-    Colors.blue,
-    Colors.purple,
-    Colors.orange,
-    Colors.teal,
+  List<LinearGradient> backgroundGradients = [
+    LinearGradient(colors: [Colors.blue, Colors.lightBlueAccent]),
+    LinearGradient(colors: [Colors.deepPurple, Colors.pinkAccent]),
+    LinearGradient(colors: [Colors.orange, Colors.redAccent]),
+    LinearGradient(colors: [Colors.teal, Colors.greenAccent]),
   ];
 
   Timer? gameLoop;
@@ -102,7 +102,7 @@ class _HomepageState extends State<HomePage> {
 
   void updateLevel() {
     int newLevel = score ~/ 10;
-    if (newLevel != currentLevel && newLevel < backgroundColors.length) {
+    if (newLevel != currentLevel && newLevel < backgroundGradients.length) {
       setState(() {
         currentLevel = newLevel;
       });
@@ -128,11 +128,14 @@ class _HomepageState extends State<HomePage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.brown,
+          backgroundColor: Colors.black,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           title: const Center(
             child: Text(
               'G A M E  O V E R',
-              style: TextStyle(color: Colors.white),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
           content: Column(
@@ -140,25 +143,29 @@ class _HomepageState extends State<HomePage> {
             children: [
               Text(
                 'Score: $score',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
               Text(
                 'Best Score: $bestScore',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ],
           ),
           actions: [
             GestureDetector(
               onTap: resetGame,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Container(
-                  padding: const EdgeInsets.all(7),
-                  color: Colors.white,
-                  child: const Text(
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.blueAccent,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Center(
+                  child: Text(
                     'PLAY AGAIN',
-                    style: TextStyle(color: Colors.brown),
+                    style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ),
@@ -205,7 +212,9 @@ class _HomepageState extends State<HomePage> {
             Expanded(
               flex: 3,
               child: Container(
-                color: backgroundColors[currentLevel],
+                decoration: BoxDecoration(
+                  gradient: backgroundGradients[currentLevel],
+                ),
                 child: Center(
                   child: Stack(
                     children: [
@@ -244,7 +253,16 @@ class _HomepageState extends State<HomePage> {
                         child: Text(
                           gameHasStarted ? '' : 'T A P  T O  P L A Y',
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 5,
+                                  color: Colors.black,
+                                  offset: Offset(2, 2),
+                                )
+                              ]),
                         ),
                       ),
                       Positioned(
@@ -255,17 +273,41 @@ class _HomepageState extends State<HomePage> {
                             Text(
                               'Score: $score',
                               style: const TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 5,
+                                      color: Colors.black,
+                                      offset: Offset(1, 1),
+                                    )
+                                  ]),
                             ),
                             Text(
                               'Best: $bestScore',
                               style: const TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 5,
+                                      color: Colors.black,
+                                      offset: Offset(1, 1),
+                                    )
+                                  ]),
                             ),
                             Text(
                               'Level: ${currentLevel + 1}',
                               style: const TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 5,
+                                      color: Colors.black,
+                                      offset: Offset(1, 1),
+                                    )
+                                  ]),
                             ),
                           ],
                         ),
@@ -277,7 +319,13 @@ class _HomepageState extends State<HomePage> {
             ),
             Expanded(
               child: Container(
-                color: Colors.brown,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.brown, Colors.black],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
               ),
             ),
           ],
